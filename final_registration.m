@@ -34,7 +34,7 @@ imageorientation=atand(yimage_normal./ximage_normal);
 [A,bx,by]=Final_PointCorrespondence(imageorientation,atlasorientation);     % distance for final correspondece is set to 50 and angle 1
 
 % identifying points from damaged areas.
-pointsTobeRemoved = damagedPoints(G0,alpha);
+pointsTobeRemoved = damagedPoints(G1,thresh4,alpha);
 
 h1 = figure();set(gcf,'Visible', 'off');                                    % storing the damaged poitns for testing
 imshow(Inew1);hold on
@@ -51,7 +51,6 @@ finalCorresNum=size(A,1);
 
 % final warping
 output_image = Laplace_warping(A,bx,by,edge_atlas,new_image);
-% output_image = TPS_warping(A,bx,by,edge_atlas,new_image)
 
 end
 

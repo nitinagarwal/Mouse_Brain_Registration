@@ -1,13 +1,27 @@
+% Input parameters
 
-mex solveLaplace.cpp                                    
+% Make sure your input image is well centered (i.e. the MI slice is not
+% touching the boundary and there is enough gap)
 
-% ------------------------Opening parallel toolbox----------------------------
+% use overlap_image() to see the overlap after warping.
+
+% change parameters for threshold_Histogram() depending on the noise in your dataset. Read the paper for more details. 
+
+% The code is modular. Hence comment/switch the module if its not required.
+% The code is well commented as well for easy of use/modification. Also use
+% the aux folders for debugging.
+
+channelInfo=2;     % channel used for registration (v.imp)
+alpha=50;          % medial_axis length (edge_length)
+thresh1=0;
+R=0;               % no rotation              
+
 if(isempty(gcp('nocreate'))==1)
     parpool;                                        
 end
 warning('off','all')
 
-%---------------------------Reading data from file--------------------------
+%% ---------------------------Reading data from file--------------------------
 base_dir=pwd;
 addpath(genpath(base_dir))
 
@@ -35,14 +49,6 @@ for i=1:length(dirinfo)
 end
 sortedAtlas=sort(name2);
 
-%% Input parameters
-channelInfo=2;     % channel used for registration
-alpha=50;          %medial_axis length (edge_length)
-
-% Make sure your input image is well centered (i.e. the slice is not
-% touching the boundary, there is enough gap)
-thresh1=0;
-
 %% Registration 
 for sliceNum=1:length(sortedImages) 
 
@@ -63,18 +69,17 @@ I=imresize(image,[size(atlas,1) size(atlas,2)]);
 
 
 %------------------------Rotation Correction----------------------------
-% [rotated_image,thresh1,R] = rotation_alignment(I,edge_atlas,channelInfo,edgepath); % rotation with convex hull
-% figure('Name','AFTER_ROTATION'),imshow(rotated_image)
+[warped_image,thresh1,R] = rotation_alignment(I,edge_atlas,channelInfo,edgepath);
+% figure('Name','AFTER_ROTATION'),imshow(warped_image)
 
 %------------------------Bounding Box Alignment(Scaling & Translation)-----
-[warped_image,thresh2,T] = bb_alignment(I,edge_atlas,channelInfo,edgepath);
-figure('Name','AFTER_BOUNDINGBOX'),imshow(warped_image)
-% overlap_image(atlas,warped_image);  
-
-%---------------------------ICP like image registration--------------------
+[warped_image,thresh2,T] = bb_alignment(warped_image,edge_atlas,channelInfo,edgepath);
+% figure('Name','AFTER_BOUNDINGBOX'),imshow(warped_image)
+ 
+%---------------------------ICP registration--------------------
 [warped_image,num_of_Corres,transf_Matrices,thresh3] = icp_registration(warped_image,edge_atlas,atlasorientation,channelInfo,edgepath);
 imwrite(warped_image+(255-atlas),fullfile(edgepath,'4_After_all_warping.jpg')); 
-% overlap_image(atlas,warped_image);
+
 
 %---------------------------Final Correspondence--------------------------
 [output_image,finalCorresNum,thresh4] = final_registration(warped_image,edge_atlas,atlasorientation,channelInfo,alpha, edgepath);

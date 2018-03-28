@@ -1,12 +1,20 @@
 # Geometry Processing of Conventionally Produced Mouse Brain Slices. 
 
-This is the code to register mouse brain microscopic images with annotated ARA atlas images The modular organization of the code allows to comment certain steps which are not required. 
-
-This is research code. Hence its not optimized for speed.
+This is the code to register mouse brain microscopic images with annotated ARA atlas images. The method extracts dominant edges from both input images and aligns them using non-linear transformation. For more details please read the paper.
 
 ## Getting Started
 
-Please refer to the run_me.m file.
+To run the demo, download the sample data
+```
+bash download_dataset.sh
+```
+
+Compile mex files
+```
+mex solveLaplace.cpp
+```
+
+Please read the run_me.m file.
 
 ## License
 

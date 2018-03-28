@@ -1,13 +1,12 @@
-function pointsTobeRemoved = damagedPoints(new_image, alpha)
+function pointsTobeRemoved = damagedPoints(new_image, thresh, alpha)
 
-hgaus=fspecial('gaussian',12,2); %figure,surf(hgaus)         
-G1=imfilter(new_image,hgaus);
-thresh = threshold_Histogram(G1,1,false);
+G1 = new_image;
+
 Inew=edge(G1,'canny',[0 thresh]); %imtool(Inew)             % this threshold can be varied depending on the edges you want
 
-disk_size=5;                                                % computing the outermost boundary of image
+disk_size=5;                                                % computing the outermost boundary of image via morph oper.
 se = strel('disk',disk_size);
-temp=imclose(Inew,se); %imtool(temp)
+temp=imdilate(Inew,se); %imtool(temp)
 [moving_image,~] = largestConnectedComponent(temp,1000,false);
 moving_image=bwmorph(moving_image,'thin',Inf);
 
@@ -23,7 +22,7 @@ while (numel(find(array==0))>1)
     end
     disk_size=disk_size+2;  
     se = strel('disk',disk_size);
-    temp=imclose(Inew,se);%imtool(temp)
+    temp=imclose(Inew,se);      %imtool(temp)
     [moving_image,~] = largestConnectedComponent(temp,1000+(iter*100),false);           % experimental code. this line              
      moving_image=bwmorph(moving_image,'thin',Inf);
     [B,~,~,A] = bwboundaries(moving_image,'noholes');                           
