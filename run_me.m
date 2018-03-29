@@ -8,6 +8,7 @@
 % change parameters for threshold_Histogram() depending on the noise in your dataset. Read the paper for more details. 
 
 % The code is modular. Hence comment/switch the module if its not required.
+
 % The code is well commented as well for easy of use/modification. Also use
 % the aux folders for debugging.
 
