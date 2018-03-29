@@ -11,6 +11,9 @@
 % The code is well commented as well for easy of use/modification. Also use
 % the aux folders for debugging.
 
+% The final non-linear transfromation uses Laplace Equations, can be easily
+% replaced to cubic B-spline depending on the applicatin. 
+
 channelInfo=2;     % channel used for registration (v.imp)
 alpha=50;          % medial_axis length (edge_length)
 thresh1=0;
@@ -58,22 +61,18 @@ atlas=imread(fullfile(rdir,sortedAtlas{sliceNum}));
 edgepath=fullfile(edge_dir,sprintf('%04d',sliceNum));
 mkdir(edgepath);
 
-
-atlas=imresize(atlas,[2115 2731]);
+I=image;
 edge_atlas=atlas_segmentation(atlas); 
 [xatlas_normal,yatlas_normal]=normal_vector(edge_atlas,false);
 atlasorientation=atand(yatlas_normal./xatlas_normal);
 
-%resizing the image
-I=imresize(image,[size(atlas,1) size(atlas,2)]);
-
 
 %------------------------Rotation Correction----------------------------
-[warped_image,thresh1,R] = rotation_alignment(I,edge_atlas,channelInfo,edgepath);
+% [warped_image,thresh1,R] = rotation_alignment(I,edge_atlas,channelInfo,edgepath);
 % figure('Name','AFTER_ROTATION'),imshow(warped_image)
 
 %------------------------Bounding Box Alignment(Scaling & Translation)-----
-[warped_image,thresh2,T] = bb_alignment(warped_image,edge_atlas,channelInfo,edgepath);
+[warped_image,thresh2,T] = bb_alignment(I,edge_atlas,channelInfo,edgepath);
 % figure('Name','AFTER_BOUNDINGBOX'),imshow(warped_image)
  
 %---------------------------ICP registration--------------------
