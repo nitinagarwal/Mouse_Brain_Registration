@@ -7,9 +7,9 @@
 
 % change parameters for threshold_Histogram() depending on the noise in your dataset. Read the paper for more details. 
 
-% The code is modular. Hence comment/switch the module if its not required.
+% The code is modular. Hence comment/switch a module if its not required.
 
-% The code is well commented as well for easy of use/modification. Also use
+% The code is well commented for ease of use/modification. Also use
 % the aux folders for debugging.
 
 % The final non-linear transfromation uses Laplace Equations, can be easily
@@ -54,6 +54,7 @@ end
 sortedAtlas=sort(name2);
 
 %% Registration 
+
 for sliceNum=1:length(sortedImages) 
 
 disp(['Matching ',num2str(sortedImages{sliceNum}),' microscopic slice to ',num2str(sortedAtlas{sliceNum}),' atlas slice']); 
