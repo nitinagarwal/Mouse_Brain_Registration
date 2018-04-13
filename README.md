@@ -16,6 +16,14 @@ mex solveLaplace.cpp
 
 Please read the run_me.m file.
 
+## Citation
+If you use the code/data, please cite the following paper:
+
+```
+
+
+```
+
 ## License
 
 Our code is released under MIT License (see License file for details).
