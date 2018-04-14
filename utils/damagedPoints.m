@@ -23,7 +23,7 @@ while (numel(find(array==0))>1)
     disk_size=disk_size+2;  
     se = strel('disk',disk_size);
     temp=imclose(Inew,se);      %imtool(temp)
-    [moving_image,~] = largestConnectedComponent(temp,1000+(iter*100),false);           % experimental code. this line              
+    [moving_image,~] = largestConnectedComponent(temp,1000+(iter*100),false);                      
      moving_image=bwmorph(moving_image,'thin',Inf);
     [B,~,~,A] = bwboundaries(moving_image,'noholes');                           
     array=sum(full(A),2);
