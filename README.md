@@ -1,4 +1,6 @@
 # Geometry Processing of Conventionally Produced Mouse Brain Slices. 
+### Journal of Neuroscience Methods 2018 [[Paper]](https://arxiv.org/abs/1712.09684) [[Project Page]](https://www.ics.uci.edu/~agarwal/mouseBrain/index.html)
+
 
 This is the code to register mouse brain microscopic images with annotated ARA atlas images. The method extracts dominant edges from both input images and aligns them using non-linear transformation. For more details please read the paper.
 
