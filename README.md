@@ -25,8 +25,8 @@ If you use the code/data, please cite the following paper:
 @article{agarwal2017mouse,
   author = {Nitin Agarwal, Xiangmin Xu, Gopi Meenakshisundaram},
   title = {Geometry Processing of Conventionally Produced Mouse Brain Slice Images},
-  journal = {arXiv:1712.09684},
-  year = {2017}
+  journal = {Journal of Neuroscience Methods},
+  year = {2018}
 }
 ```
 
